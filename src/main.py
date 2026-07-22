@@ -60,7 +60,6 @@ async def main() -> None:
             if records:
                 await Actor.push_data(records)
                 total_pushed += len(records)
-                await Actor.charge("review-scraped", count=len(records))
 
             done.add(company)
             await Actor.set_value(CHECKPOINT_KEY, {"done": list(done), "total_pushed": total_pushed})
