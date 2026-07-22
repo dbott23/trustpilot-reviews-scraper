@@ -1,0 +1,71 @@
+{
+  "actorSpecification": 1,
+  "fields": {
+    "company": {
+      "title": "Company",
+      "type": "string",
+      "description": "The company name that was scraped."
+    },
+    "reviewerName": {
+      "title": "Reviewer name",
+      "type": "string",
+      "description": "Full name of the reviewer."
+    },
+    "rating": {
+      "title": "Rating",
+      "type": "integer",
+      "description": "Star rating from 1 to 5."
+    },
+    "title": {
+      "title": "Review title",
+      "type": "string",
+      "description": "Headline of the review."
+    },
+    "body": {
+      "title": "Review body",
+      "type": "string",
+      "description": "Full text of the review."
+    },
+    "date": {
+      "title": "Date",
+      "type": "string",
+      "description": "Date the review was published (ISO 8601)."
+    },
+    "verified": {
+      "title": "Verified",
+      "type": "boolean",
+      "description": "Whether the review is marked as verified by Trustpilot."
+    },
+    "reviewUrl": {
+      "title": "Review URL",
+      "type": "string",
+      "description": "Direct link to the review on Trustpilot."
+    },
+    "companyUrl": {
+      "title": "Company URL",
+      "type": "string",
+      "description": "Link to the company's Trustpilot profile."
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Reviews",
+      "transformation": {
+        "fields": ["company", "reviewerName", "rating", "title", "body", "date", "verified", "reviewUrl"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "company": { "label": "Company", "format": "text" },
+          "reviewerName": { "label": "Reviewer", "format": "text" },
+          "rating": { "label": "Rating", "format": "number" },
+          "title": { "label": "Title", "format": "text" },
+          "body": { "label": "Review", "format": "text" },
+          "date": { "label": "Date", "format": "date" },
+          "verified": { "label": "Verified", "format": "boolean" },
+          "reviewUrl": { "label": "Link", "format": "link" }
+        }
+      }
+    }
+  }
+}
