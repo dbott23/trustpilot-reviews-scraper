@@ -1,0 +1,52 @@
+{
+    "title": "Trustpilot Reviews Scraper input",
+    "type": "object",
+    "schemaVersion": 1,
+    "properties": {
+        "companies": {
+            "title": "Companies",
+            "type": "array",
+            "description": "Company names or domains to search (e.g. \"Salesforce\", \"hubspot.com\"). You can enter multiple.",
+            "editor": "stringList",
+            "prefill": ["Salesforce", "HubSpot"]
+        },
+        "maxReviews": {
+            "title": "Max reviews per company",
+            "type": "integer",
+            "description": "Maximum number of reviews to collect per company. Up to 500.",
+            "default": 50,
+            "minimum": 1,
+            "maximum": 500
+        },
+        "sortBy": {
+            "title": "Sort by",
+            "type": "string",
+            "description": "How to sort reviews.",
+            "editor": "select",
+            "enum": ["recent", "highest", "lowest"],
+            "enumTitles": ["Most recent", "Highest rated", "Lowest rated"],
+            "default": "recent"
+        },
+        "minRating": {
+            "title": "Minimum star rating",
+            "type": "integer",
+            "description": "Only collect reviews at or above this rating (1–5). Leave blank for all ratings.",
+            "minimum": 1,
+            "maximum": 5
+        },
+        "trustpilotApiKey": {
+            "title": "Trustpilot API key (optional)",
+            "type": "string",
+            "description": "Free API key from developers.trustpilot.com. Gives more structured data. If omitted the page is scraped directly — still works.",
+            "editor": "textfield",
+            "isSecret": true
+        },
+        "proxyConfiguration": {
+            "title": "Proxy configuration",
+            "type": "object",
+            "description": "Proxy settings. Residential proxies are used by default.",
+            "editor": "proxy"
+        }
+    },
+    "required": ["companies"]
+}

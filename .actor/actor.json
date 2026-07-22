@@ -1,0 +1,39 @@
+{
+    "actorSpecification": 1,
+    "name": "trustpilot-reviews-scraper",
+    "title": "Trustpilot Reviews Scraper",
+    "description": "Scrape reviews from Trustpilot for any company. Enter one or more company names and get reviewer name, rating, title, review text, date, and verified status in a clean unified dataset.",
+    "version": "0.1",
+    "buildTag": "latest",
+    "input": "./input_schema.json",
+    "dockerfile": "./Dockerfile",
+    "defaultRunOptions": {
+        "timeoutSecs": 300,
+        "memoryMbytes": 2048
+    },
+    "storages": {
+        "dataset": {
+            "actorSpecification": 1,
+            "views": {
+                "overview": {
+                    "title": "Reviews",
+                    "transformation": {
+                        "fields": [
+                            "company",
+                            "rating",
+                            "title",
+                            "body",
+                            "reviewer_name",
+                            "date",
+                            "verified",
+                            "review_url"
+                        ]
+                    },
+                    "display": {
+                        "component": "table"
+                    }
+                }
+            }
+        }
+    }
+}
