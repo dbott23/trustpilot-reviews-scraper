@@ -67,7 +67,7 @@ Each result is one review:
 
 This actor uses **Pay per result** pricing:
 
-- **$1.00 per 1,000 reviews** scraped
+- **$3.00 per 1,000 reviews** scraped
 - Scraping 100 reviews for 3 companies costs **~$0.30**
 - No proxy costs — residential proxies are included
 
