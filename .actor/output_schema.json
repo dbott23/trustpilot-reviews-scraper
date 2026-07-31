@@ -1,0 +1,13 @@
+{
+    "actorOutputSchemaVersion": 1,
+    "title": "Trustpilot reviews",
+    "description": "Scraped Trustpilot reviews, stored in the default dataset.",
+    "properties": {
+        "reviews": {
+            "type": "string",
+            "title": "Reviews",
+            "description": "All scraped reviews with company, rating, title, body, reviewer, date, verified status and link.",
+            "template": "{{links.apiDefaultDatasetUrl}}/items"
+        }
+    }
+}
