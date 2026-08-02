@@ -213,7 +213,9 @@ async def _scrape_web(
 
     page_num = 1
     proxy_opts = parse_proxy(proxy)
-    async with AsyncCamoufox(headless=True, proxy=proxy_opts, firefox_user_prefs={"security.sandbox.content.level": 0}, geoip=True) as browser:
+    # "virtual" runs on an Xvfb display instead of true headless — AWS WAF's JS
+    # challenge ("Verifying Connection") detects and blocks pure headless browsers.
+    async with AsyncCamoufox(headless="virtual", proxy=proxy_opts, firefox_user_prefs={"security.sandbox.content.level": 0}, geoip=True) as browser:
         page = await browser.new_page()
 
         while len(records) < max_reviews:
@@ -224,7 +226,7 @@ async def _scrape_web(
             except Exception as e:
                 print(f"[trustpilot] goto failed page {page_num}: {e}", flush=True)
 
-            for poll in range(60):
+            for poll in range(25):
                 try:
                     html = await page.content()
                     cur_url = page.url
