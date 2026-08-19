@@ -37,6 +37,9 @@ async def main() -> None:
         done: set[str] = set(checkpoint.get("done") or [])
         total_pushed: int = checkpoint.get("total_pushed") or 0
 
+        # Sources that failed outright; used to avoid a green run with no data.
+        failures: list[str] = []
+
         for company in companies:
             if company in done:
                 Actor.log.info(f"Skipping {company} (already done)")
@@ -54,7 +57,8 @@ async def main() -> None:
                     get_proxy_url=proxy_config.new_url if proxy_config else None,
                 )
             except Exception as exc:
-                Actor.log.warning(f"Error scraping {company}: {exc}")
+                Actor.log.error(f"Error scraping {company}: {exc}")
+                failures.append(f"{company}: {exc}")
                 records = []
 
             if records:
@@ -66,6 +70,21 @@ async def main() -> None:
             Actor.log.info(f"  → {len(records)} reviews for {company} (total: {total_pushed})")
 
         Actor.log.info(f"Done. Total reviews pushed: {total_pushed}")
+
+        # A green run with an empty dataset tells the user nothing. Fail with the reason.
+        if total_pushed == 0 and failures:
+            await Actor.fail(
+                status_message=(
+                    f"Nothing scraped — all {len(failures)} source(s) failed. "
+                    f"First error: {failures[0]}"
+                )
+            )
+            return
+        if failures:
+            Actor.log.warning(
+                f"{len(failures)} source(s) failed but {total_pushed} item(s) were scraped "
+                f"from the rest. First error: {failures[0]}"
+            )
 
 
 if __name__ == "__main__":
